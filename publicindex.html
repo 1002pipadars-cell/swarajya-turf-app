@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>Swarajya Turf | Next-Gen Esports Edition</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+  :root {
+    --bg-dark: #05070f;
+    --card-bg: rgba(13, 17, 28, 0.75);
+    --neon-cyan: #00f3ff;
+    --neon-purple: #9d4edd;
+    --neon-green: #00ff66;
+    --neon-red: #ff0055;
+    --neon-yellow: #ffe600;
+    --glass-border: rgba(0, 243, 255, 0.18);
+    --text-dim: #7f8ea3;
+  }
+
+  * { box-sizing: border-box; }
+  
+  body {
+    margin: 0;
+    font-family: 'Rajdhani', sans-serif;
+    background-color: var(--bg-dark);
+    color: #ffffff;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-image: 
+      radial-gradient(circle at 10% 10%, rgba(0, 243, 255, 0.15) 0%, transparent 35%),
+      radial-gradient(circle at 90% 90%, rgba(157, 78, 221, 0.15) 0%, transparent 35%),
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 30px 30px, 30px 30px;
+    background-attachment: fixed;
+  }
+
+  .wrap { max-width: 1180px; margin: auto; padding: 24px; }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 16px 20px;
+    background: rgba(10, 14, 23, 0.8);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    margin-bottom: 28px;
+    box-shadow: 0 0 25px rgba(0, 243, 255, 0.1);
+  }
+
+  .brand {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 26px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    color: #fff;
+    cursor: pointer;
+    text-shadow: 0 0 12px var(--neon-cyan);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .brand::before {
+    content: '';
+    width: 12px;
+    height: 12px;
+    background: var(--neon-cyan);
+    box-shadow: 0 0 10px var(--neon-cyan);
+    transform: rotate(45deg);
+  }
+
+  .top-actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+
+  button, .btn {
+    font-family: 'Orbitron', sans-serif;
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    text-transform: uppercase;
+    clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+  }
+
+  button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
+    border-color: var(--neon-cyan);
+  }
+
+  .primary { 
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+    color: #000;
+    border: none;
+    text-shadow: none;
+  }
+
+  .secondary { 
+    background: rgba(255, 255, 255, 0.05); 
+    color: #fff; 
+  }
+
+  .danger { 
+    background: rgba(255, 0, 85, 0.2); 
+    color: var(--neon-red); 
+    border-color: rgba(255, 0, 85, 0.5); 
+  }
+
+  .badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: var(--neon-red);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 900;
+    padding: 4px 8px;
+    border-radius: 4px;
+    box-shadow: 0 0 12px var(--neon-red);
+    animation: neonPulse 1.2s infinite alternate;
+  }
+
+  @keyframes neonPulse {
+    from { transform: scale(1); box-shadow: 0 0 8px var(--neon-red); }
+    to { transform: scale(1.15); box-shadow: 0 0 18px var(--neon-red); }
+  }
+
+  .card {
+    background: var(--card-bg);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+  }
+
+  .hero h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(30px, 4.5vw, 48px);
+    font-weight: 900;
+    letter-spacing: 1px;
+    margin: 12px 0;
+    background: linear-gradient(90deg, #ffffff, var(--neon-cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+
+  label { font-size: 13px; color: var(--neon-cyan); font-weight: 700; display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+
+  input, select {
+    width: 100%;
+    background: rgba(4, 8, 16, 0.8);
+    border: 1px solid rgba(0, 243, 255, 0.2);
+    color: #fff;
+    padding: 14px 16px;
+    border-radius: 10px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    outline: none;
+    transition: all 0.25s ease;
+  }
+
+  input:focus, select:focus {
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.25);
+  }
+
+  .game {
+    border: 1px solid var(--glass-border);
+    padding: 22px;
+    border-radius: 14px;
+    cursor: pointer;
+    background: rgba(15, 23, 42, 0.4);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+  }
+
+  .game:hover {
+    border-color: var(--neon-cyan);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 243, 255, 0.2);
+  }
+
+  .game.active {
+    border-color: var(--neon-cyan);
+    background: linear-gradient(145deg, rgba(0, 243, 255, 0.15), rgba(157, 78, 221, 0.15));
+    box-shadow: 0 0 25px rgba(0, 243, 255, 0.3);
+  }
+
+  .game h3 { font-family: 'Orbitron', sans-serif; margin: 0 0 8px; color: #fff; font-size: 18px; font-weight: 700; letter-spacing: 0.5px; }
+  .game p { margin: 0; color: var(--text-dim); font-size: 14px; font-weight: 500; }
+
+  .slot-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+
+  .slot {
+    padding: 16px;
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    background: rgba(4, 8, 16, 0.6);
+    text-align: center;
+    cursor: pointer;
+    color: #fff;
+    transition: all 0.25s ease;
+  }
+
+  .slot:hover:not(:disabled) {
+    border-color: var(--neon-cyan);
+    background: rgba(0, 243, 255, 0.1);
+  }
+
+  .slot.selected {
+    border-color: var(--neon-green);
+    background: linear-gradient(135deg, rgba(0, 255, 102, 0.2), rgba(0, 243, 255, 0.2));
+    box-shadow: 0 0 20px rgba(0, 255, 102, 0.35);
+  }
+
+  .slot.booked { opacity: 0.3; cursor: not-allowed; text-decoration: line-through; border-color: transparent; }
+
+  .payment-option-card {
+    border: 1px solid var(--glass-border);
+    padding: 16px;
+    border-radius: 12px;
+    background: rgba(4, 8, 16, 0.6);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.2s ease;
+  }
+
+  .payment-option-card:hover {
+    border-color: var(--neon-cyan);
+    background: rgba(0, 243, 255, 0.08);
+  }
+
+  .payment-option-card.selected {
+    border-color: var(--neon-green);
+    background: rgba(0, 255, 102, 0.15);
+    box-shadow: 0 0 15px rgba(0, 255, 102, 0.2);
+  }
+
+  .summary { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .amount { font-family: 'Orbitron', sans-serif; font-size: 36px; font-weight: 900; color: var(--neon-cyan); margin-top: 4px; text-shadow: 0 0 10px rgba(0, 243, 255, 0.5); }
+
+  .qr-wrap { text-align: center; }
+  .qr-wrap img { max-width: 260px; width: 100%; background: #fff; padding: 14px; border-radius: 16px; border: 2px solid var(--neon-cyan); box-shadow: 0 0 25px rgba(0, 243, 255, 0.3); }
+
+  .timer { font-family: 'Orbitron', sans-serif; font-size: 15px; font-weight: 700; color: var(--neon-yellow); margin: 16px 0; letter-spacing: 1.5px; text-shadow: 0 0 8px var(--neon-yellow); }
+  .hidden { display: none !important; }
+
+  .pill {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 4px;
+    background: rgba(0, 243, 255, 0.1);
+    color: var(--neon-cyan);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    border: 1px solid rgba(0, 243, 255, 0.4);
+  }
+
+  .audio-btn { background: rgba(255, 255, 255, 0.05); color: #fff; border-color: rgba(255,255,255,0.2); }
+
+  .spinner-container { display: flex; flex-direction: column; align-items: center; padding: 30px; }
+  .spinner {
+    width: 40px; height: 40px;
+    border: 3px solid rgba(0, 243, 255, 0.2);
+    border-top-color: var(--neon-cyan);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .notice { padding: 16px; border-radius: 10px; background: rgba(4, 8, 16, 0.6); border: 1px solid var(--glass-border); margin: 10px 0; font-size: 15px; }
+  .notice.error { border-color: var(--neon-red); color: var(--neon-red); background: rgba(255, 0, 85, 0.1); }
+  .notice.warning { border-color: var(--neon-yellow); color: var(--neon-yellow); background: rgba(255, 230, 0, 0.1); }
+
+  .admin-table { width: 100%; border-collapse: collapse; font-size: 15px; }
+  .admin-table th, .admin-table td { padding: 14px; border-bottom: 1px solid var(--glass-border); text-align: left; }
+  .admin-table th { font-family: 'Orbitron', sans-serif; color: var(--neon-cyan); font-size: 12px; letter-spacing: 1px; }
+  
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px; }
+  .stat { padding: 18px; border: 1px solid var(--glass-border); border-radius: 12px; background: rgba(4, 8, 16, 0.6); }
+  .stat span { font-size: 12px; color: var(--text-dim); text-transform: uppercase; font-weight: 700; letter-spacing: 1px; }
+  .stat b { font-family: 'Orbitron', sans-serif; font-size: 24px; color: #fff; display: block; margin-top: 6px; font-weight: 700; }
+
+  .admin-tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--glass-border); padding-bottom: 12px; }
+  .tab-btn { background: transparent; border: none; color: var(--text-dim); padding: 10px 18px; font-family: 'Orbitron', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; border-radius: 6px; clip-path: none; }
+  .tab-btn.active { background: rgba(0, 243, 255, 0.15); color: var(--neon-cyan); border: 1px solid var(--neon-cyan); }
+
+  @media(max-width: 800px) { .grid, .slot-grid, .stats { grid-template-columns: 1fr 1fr; } }
+  @media(max-width: 560px) { .wrap { padding: 14px; } .form-grid, .summary, .grid { grid-template-columns: 1fr; } .slot-grid { grid-template-columns: 1fr 1fr; } }
+  </style>
+</head>
+<body>
+
+<audio id="globalBgm" preload="auto"></audio>
+
+<div class="wrap">
+  <header>
+    <div class="brand" onclick="playSfx('click'); goHome();">SWARAJYA ARENA</div>
+    <div class="top-actions">
+      <button class="audio-btn" id="musicToggleBtn" onmouseenter="playSfx('hover')" onclick="playSfx('click'); toggleBGM()">🎵 BGM: OFF</button>
+      <button class="secondary" onmouseenter="playSfx('hover')" onclick="playSfx('click'); showStatus();">🔔 Bookings</button>
+      <button class="secondary" id="adminBtn" onmouseenter="playSfx('hover')" onclick="playSfx('click'); showAdminLogin();">
+        Admin
+        <span id="pendingBadge" class="badge hidden">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- 1. MAIN BOOKING VIEW -->
+  <section id="customerView">
+    <div class="card hero">
+      <span class="pill">NEXT-GEN ARENA RESERVATION SYSTEM</span>
+      <h1>SWARAJYA ARENA</h1>
+      <p style="color: var(--text-dim); font-size: 16px;">Select mode, date, and continuous battle intervals to lock your session instantly.</p>
+    </div>
+
+    <div class="card">
+      <h2 style="font-family: 'Orbitron', sans-serif; font-size: 16px; margin-top:0; letter-spacing: 1px;">01 // SELECT GAME MODE</h2>
+      <div id="games" class="grid">
+        <div class="spinner-container" style="grid-column: 1 / -1;"><div class="spinner"></div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 style="font-family: 'Orbitron', sans-serif; font-size: 16px; margin-top:0; letter-spacing: 1px;">02 // SELECT DATE & TIMESLOTS</h2>
+      <div class="form-grid">
+        <div>
+          <label>MATCH DATE</label>
+          <input id="bookingDate" type="date" onchange="onDateChange();">
+        </div>
+        <div>
+          <label>SQUAD SIZE (PLAYERS)</label>
+          <input id="players" type="number" min="1" max="50" value="10" onchange="updateAmount()">
+        </div>
+      </div>
+      
+      <div class="notice warning" style="margin-top: 15px; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+        ⚡ Continuous booking only (e.g. 1-2-3 or 3-4). Non-sequential slots are disabled.
+      </div>
+
+      <div id="slots" class="slot-grid" style="margin-top:10px">
+        <div class="spinner-container" style="grid-column: 1 / -1;"><div class="spinner"></div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 style="font-family: 'Orbitron', sans-serif; font-size: 16px; margin-top:0; letter-spacing: 1px;">03 // PLAYER INTEL & PAYMENT TYPE</h2>
+      <div class="form-grid">
+        <div><label>Player Name *</label><input id="name" placeholder="Enter primary player name"></div>
+        <div><label>Phone Number *</label><input id="phone" placeholder="10-digit mobile number"></div>
+        <div><label>Email Address</label><input id="email" type="email" placeholder="For instant match confirmation"></div>
+        <div><label>Notes / Strategy</label><input id="notes" placeholder="Optional notes"></div>
+      </div>
+
+      <div style="margin-top:20px;">
+        <label>CHOOSE PAYMENT MODE</label>
+        <div class="form-grid" style="margin-top:8px;">
+          <div class="payment-option-card selected" id="optFull" onclick="selectPaymentType('FULL')">
+            <input type="radio" name="paymentType" id="radioFull" value="FULL" checked style="width:auto;">
+            <div>
+              <strong style="font-family:'Orbitron',sans-serif; color:#fff;">PAY FULL AMOUNT</strong>
+              <div style="font-size:13px; color:var(--text-dim);" id="fullAmountLabel">₹0</div>
+            </div>
+          </div>
+          <div class="payment-option-card" id="optPartial" onclick="selectPaymentType('PARTIAL')">
+            <input type="radio" name="paymentType" id="radioPartial" value="PARTIAL" style="width:auto;">
+            <div>
+              <strong style="font-family:'Orbitron',sans-serif; color:var(--neon-green);">PAY BOOKING ADVANCE</strong>
+              <div style="font-size:13px; color:var(--text-dim);" id="partialAmountLabel">₹0 now, remaining at turf</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="partialNotice" class="notice warning hidden" style="margin-top: 15px;">
+        ⚠️ <b>IMPORTANT:</b> The booking amount is non-refundable. If you cancel your booking, the amount paid will not be refunded.
+      </div>
+
+      <div class="summary" style="margin-top:20px">
+        <div class="notice">
+          <b>SELECTED MATCH SESSION:</b><br><span id="selectionText" style="color:#fff; font-size: 16px;">Pick game & slot</span><br>
+          <small id="dueAtTurfText" style="color:var(--neon-yellow); font-weight:700; margin-top:4px; display:block;"></small>
+        </div>
+        <div class="notice"><b>PAYABLE NOW:</b><div class="amount" id="amount">₹0</div></div>
+      </div>
+      <button id="btnSubmitBooking" class="primary" style="width:100%;margin-top:20px; padding: 16px;" onmouseenter="playSfx('hover')" onclick="playSfx('action'); proceedToPayment();">GENERATE PAYMENT QR</button>
+      <div id="customerMsg"></div>
+    </div>
+  </section>
+
+  <!-- 2. PAYMENT VIEW -->
+  <section id="paymentView" class="hidden">
+    <div class="card">
+      <button class="secondary" type="button" onmouseenter="playSfx('hover')" onclick="playSfx('click'); goHome();">← Return to Setup</button>
+      <h2 style="font-family: 'Orbitron', sans-serif; font-size: 20px; margin-top: 18px;">STAGE COMPLETED: PAYMENT TERMINAL</h2>
+      <div id="paymentDetails"></div>
+      
+      <div id="qrCodeContainer" class="qr-wrap">
+        <div id="timer" class="timer"></div>
+        <img id="qr" alt="UPI QR Code">
+        <p style="color: var(--text-dim); font-size: 15px; margin-top: 14px;">Scan using any UPI App. Slot locks automatically when you submit payment confirmation.</p>
+        <div style="display:flex; gap:12px; justify-content:center; margin-top:18px;">
+          <button id="btnIHavePaid" class="primary" onmouseenter="playSfx('hover')" onclick="playSfx('action'); confirmPaymentAndSubmit();">I HAVE PAID / SUBMIT</button>
+        </div>
+      </div>
+
+      <div id="paymentSubmittedMessage" class="hidden" style="margin-top: 20px;"></div>
+    </div>
+  </section>
+
+  <!-- 3. STATUS TRACKER VIEW -->
+  <section id="statusView" class="hidden">
+    <div class="card">
+      <button class="secondary" type="button" onmouseenter="playSfx('hover')" onclick="playSfx('click'); goHome();">← Home</button>
+      <h2 style="font-family: 'Orbitron', sans-serif; font-size: 20px; margin-top: 18px;">🔔 MATCH STATUS TRACKER</h2>
+      <p style="color: var(--text-dim); font-size: 14px;">Track all your active and past turf reservations using your registered phone number or specific Booking ID.</p>
+      
+      <div class="form-grid" style="margin-top: 15px;">
+        <div style="grid-column: 1 / -1;">
+          <label>Phone Number OR Booking ID *</label>
+          <input id="statusQuery" placeholder="Enter 10-digit Phone Number or Booking ID">
+        </div>
+      </div>
+      <button id="btnCheckStatus" class="primary" style="margin-top:18px; width: 100%; padding: 14px;" onmouseenter="playSfx('hover')" onclick="playSfx('click'); fetchStatus();">Fetch Match History & Status</button>
+      
+      <div id="statusResult" style="margin-top: 20px;"></div>
+    </div>
+  </section>
+
+  <!-- 4. ADMIN LOGIN -->
+  <section id="adminLoginView" class="hidden">
+    <div class="card" style="max-width:480px;margin:auto">
+      <button class="secondary" type="button" onmouseenter="playSfx('hover')" onclick="playSfx('click'); goHome();">← Home</button>
+      <h2 style="font-family: 'Orbitron', sans-serif; font-size: 20px; margin-top: 18px;">ADMIN GATEKEEPER</h2>
+      <div><label>Admin Email</label><input id="adminEmail" type="email" value="admin@swarajya.com"></div>
+      <div style="margin-top:14px"><label>Access PIN</label><input id="adminPin" type="password" value="1234"></div>
+      <button id="btnAdminLogin" class="primary" style="margin-top:20px;width:100%" onmouseenter="playSfx('hover')" onclick="playSfx('action'); adminLogin();">AUTHENTICATE</button>
+      <div id="adminLoginMsg"></div>
+    </div>
+  </section>
+
+  <!-- 5. ADMIN DASHBOARD -->
+  <section id="adminView" class="hidden">
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div><h2 style="font-family: 'Orbitron', sans-serif; margin:0; font-size: 22px;">ADMIN CONTROL CENTER</h2><p id="adminName" style="color: var(--text-dim); font-size: 14px; margin-top: 4px;"></p></div>
+        <button class="secondary" onmouseenter="playSfx('hover')" onclick="playSfx('click'); logoutAdmin();">LOGOUT</button>
+      </div>
+
+      <div class="stats" id="stats"></div>
+
+      <div style="overflow:auto; margin-top: 18px;" id="adminMainContainer">
+        <table class="admin-table">
+          <thead><tr><th>Booking ID</th><th>Customer Info</th><th>Slot Details</th><th>Amount</th><th>Status</th><th>Control Action</th></tr></thead>
+          <tbody id="adminRows"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+// Audio FX setup
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+function playSfx(type) {
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  const osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
+  osc.connect(gain); gain.connect(audioCtx.destination);
+  const now = audioCtx.currentTime;
+  if (type === 'hover') {
+    osc.type = 'sine'; osc.frequency.setValueAtTime(600, now); osc.frequency.exponentialRampToValueAtTime(800, now + 0.04);
+    gain.gain.setValueAtTime(0.03, now); gain.gain.linearRampToValueAtTime(0.001, now + 0.04);
+    osc.start(now); osc.stop(now + 0.04);
+  } else if (type === 'click') {
+    osc.type = 'triangle'; osc.frequency.setValueAtTime(900, now); osc.frequency.exponentialRampToValueAtTime(300, now + 0.06);
+    gain.gain.setValueAtTime(0.08, now); gain.gain.linearRampToValueAtTime(0.001, now + 0.06);
+    osc.start(now); osc.stop(now + 0.06);
+  } else if (type === 'action') {
+    osc.type = 'sawtooth'; osc.frequency.setValueAtTime(300, now); osc.frequency.exponentialRampToValueAtTime(1200, now + 0.12);
+    gain.gain.setValueAtTime(0.1, now); gain.gain.linearRampToValueAtTime(0.001, now + 0.12);
+    osc.start(now); osc.stop(now + 0.12);
+  }
+}
+
+// API bridge to Vercel Node Endpoints
+async function api(endpoint, method = 'GET', data = null) {
+  const options = { method, headers: { 'Content-Type': 'application/json' } };
+  if (data) options.body = JSON.stringify(data);
+  const response = await fetch(`/api/${endpoint}`, options);
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || 'API request failed');
+  }
+  return response.json();
+}
+
+let APP = null, selectedGame = null, selectedSlots = [], currentBooking = null, timerInterval = null;
+let rawSlotsData = [], selectedPaymentMode = 'FULL', adminToken = '';
+
+window.onload = async () => {
+  try {
+    APP = await api('getAppData');
+    renderGames();
+    const today = new Date().toISOString().slice(0, 10);
+    document.getElementById('bookingDate').value = today;
+    document.getElementById('bookingDate').min = today;
+
+    if (APP.games && APP.games.length > 0) {
+      selectedGame = APP.games[0];
+      renderGames();
+    }
+    await loadSlots();
+  } catch(e) { console.error(e); }
+};
+
+function renderGames() {
+  const el = document.getElementById('games');
+  el.innerHTML = (APP.games || []).map(g => `
+    <div class="game ${selectedGame && String(selectedGame.id) === String(g.id) ? 'active' : ''}" onclick="selectGame('${g.id}')">
+      <h3>${g.name}</h3><p>${g.description}</p>
+    </div>`).join('');
+}
+
+function selectGame(id) {
+  selectedGame = APP.games.find(g => String(g.id) === String(id));
+  renderGames();
+  selectedSlots = [];
+  loadSlots();
+}
+
+function onDateChange() { selectedSlots = []; loadSlots(); }
+
+async function loadSlots() {
+  const date = document.getElementById('bookingDate').value;
+  if (!selectedGame || !date) return;
+  
+  const res = await api(`getAvailability?date=${date}&gameId=${selectedGame.id}`);
+  rawSlotsData = res.slots || [];
+  renderSlots();
+}
+
+function renderSlots() {
+  document.getElementById('slots').innerHTML = rawSlotsData.map(s => {
+    const isSelected = selectedSlots.some(x => String(x.id) === String(s.id));
+    return `
+      <button class="slot ${s.booked ? 'booked' : ''} ${isSelected ? 'selected' : ''}" ${s.booked ? 'disabled' : ''} onclick="toggleSlot('${s.id}')">
+        <strong>${s.start} - ${s.end}</strong><br>
+        <small>₹${s.defaultRate}</small>
+      </button>`;
+  }).join('');
+}
+
+function toggleSlot(id) {
+  const slotObj = rawSlotsData.find(s => String(s.id) === String(id));
+  if (!slotObj || slotObj.booked) return;
+  const idx = selectedSlots.findIndex(s => String(s.id) === String(id));
+  if (idx > -1) selectedSlots.splice(idx, 1);
+  else selectedSlots.push(slotObj);
+  renderSlots();
+  updateAmount();
+}
+
+function selectPaymentType(mode) {
+  selectedPaymentMode = mode;
+  document.getElementById('optFull').classList.toggle('selected', mode === 'FULL');
+  document.getElementById('optPartial').classList.toggle('selected', mode === 'PARTIAL');
+  updateAmount();
+}
+
+function updateAmount() {
+  if (selectedSlots.length === 0) {
+    document.getElementById('amount').textContent = '₹0';
+    return;
+  }
+  let total = selectedSlots.reduce((acc, s) => acc + Number(s.defaultRate), 0);
+  document.getElementById('amount').textContent = '₹' + total;
+}
+
+async function proceedToPayment() {
+  const name = document.getElementById('name').value;
+  const phone = document.getElementById('phone').value;
+  if (!name || !phone || selectedSlots.length === 0) return alert('Fill required fields and select slots');
+
+  const payload = {
+    bookingDate: document.getElementById('bookingDate').value,
+    gameId: selectedGame.id,
+    gameName: selectedGame.name,
+    slotId: selectedSlots.map(s => s.id).join(','),
+    name, phone,
+    amount: document.getElementById('amount').textContent.replace('₹', '')
+  };
+
+  currentBooking = await api('createBooking', 'POST', payload);
+  currentBooking.qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=swarajyaturf@upi&pn=SwarajyaArena&am=${currentBooking.amount}&cu=INR`;
+  
+  hideAll();
+  document.getElementById('paymentView').classList.remove('hidden');
+  document.getElementById('qr').src = currentBooking.qrUrl;
+}
+
+async function confirmPaymentAndSubmit() {
+  await api('submitPaymentConfirmation', 'POST', { bookingId: currentBooking.bookingId });
+  alert('Booking Submitted Successfully!');
+  goHome();
+}
+
+async function fetchStatus() {
+  const q = document.getElementById('statusQuery').value;
+  const res = await api(`getBookingStatus?query=${q}`);
+  document.getElementById('statusResult').innerHTML = res.map(b => `
+    <div class="notice">
+      <b>${b.bookingId}</b> - Status: ${b.paymentStatus}<br>
+      Date: ${b.bookingDate} | Amount: ₹${b.amount}
+    </div>`).join('');
+}
+
+function showStatus() { hideAll(); document.getElementById('statusView').classList.remove('hidden'); }
+function showAdminLogin() { hideAll(); document.getElementById('adminLoginView').classList.remove('hidden'); }
+
+async function adminLogin() {
+  const email = document.getElementById('adminEmail').value;
+  const pin = document.getElementById('adminPin').value;
+  const res = await api('adminLogin', 'POST', { email, pin });
+  adminToken = res.token;
+  hideAll();
+  document.getElementById('adminView').classList.remove('hidden');
+  loadAdmin();
+}
+
+async function loadAdmin() {
+  const res = await api('getAdminDashboard');
+  document.getElementById('adminRows').innerHTML = res.bookings.map(b => `
+    <tr>
+      <td>${b.bookingId}</td>
+      <td>${b.name}<br>${b.phone}</td>
+      <td>${b.gameName}</td>
+      <td>₹${b.amount}</td>
+      <td>${b.paymentStatus}</td>
+      <td>
+        <button class="primary" onclick="approve('${b.bookingId}')">Approve</button>
+        <button class="danger" onclick="reject('${b.bookingId}')">Reject</button>
+      </td>
+    </tr>`).join('');
+}
+
+async function approve(id) {
+  await api('adminApprove', 'POST', { bookingId: id });
+  loadAdmin();
+}
+
+async function reject(id) {
+  await api('adminReject', 'POST', { bookingId: id, reason: 'Payment Verification Failed' });
+  loadAdmin();
+}
+
+function goHome() { hideAll(); document.getElementById('customerView').classList.remove('hidden'); }
+function hideAll() { ['customerView', 'paymentView', 'statusView', 'adminLoginView', 'adminView'].forEach(id => document.getElementById(id).classList.add('hidden')); }
+</script>
+</body>
+</html>
